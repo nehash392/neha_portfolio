@@ -37,23 +37,27 @@ const PipelineBackground = () => {
         />
       </svg>
       
-      {/* Floating tech icons */}
+      {/* Floating tech icons with glow effect */}
       {icons.map((item, index) => (
         <motion.div
           key={index}
-          className="absolute text-white opacity-20"
+          className="absolute text-white"
           style={{ 
             left: item.x, 
             top: item.y,
-            fontSize: item.size
+            fontSize: item.size,
           }}
           animate={{
-            y: ["0%", "10%", "0%"],
+            y: ["-10px", "10px", "-10px"],
+            x: ["-5px", "5px", "-5px"],
+            scale: [0.9, 1.1, 0.9],
+            opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
             duration: item.duration,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
+            delay: index * 0.5,
           }}
         >
           {item.icon}
