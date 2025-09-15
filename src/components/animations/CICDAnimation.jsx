@@ -1,26 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import rocketGif from "./rocket-6594_256.gif"; // <-- Import the GIF directly
 
 /* ---------------- Icons ---------------- */
 const Icons = {
   Code: (props) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
-      <path
-        d="M16 18l6-6-6-6M8 6l-6 6 6 6"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   Test: (props) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
-      <path
-        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   Docker: (props) => (
@@ -30,12 +19,7 @@ const Icons = {
   ),
   Check: (props) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
-      <polyline
-        points="20 6 9 17 4 12"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <polyline points="20 6 9 17 4 12" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   Upload: (props) => (
@@ -43,6 +27,27 @@ const Icons = {
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
       <polyline points="17 8 12 3 7 8" />
       <line x1="12" y1="3" x2="12" y2="15" />
+    </svg>
+  ),
+  /* AWS wordmark + smile (word inherits currentColor) */
+  AWS: (props) => (
+    <svg viewBox="0 0 72 44" xmlns="http://www.w3.org/2000/svg" aria-label="AWS" {...props}>
+      <text
+        x="36"
+        y="22"
+        textAnchor="middle"
+        fontSize="20"
+        fontWeight="700"
+        fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+        fill="currentColor"
+        letterSpacing="-0.5"
+      >
+        aws
+      </text>
+      <path
+        d="M10 31c8.5 6 19.9 9.5 26 9.5s17.5-3.5 26-9.5c1-.7 2.3.6 1.4 1.4C55 39.7 43 43.5 36 43.5S17 39.7 8.6 32.4c-.9-.8.4-2.1 1.4-1.4z"
+        fill="#FF9900"
+      />
     </svg>
   ),
 };
@@ -53,15 +58,14 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
   const [buildProgress, setBuildProgress] = useState(0);
   const [tests, setTests] = useState({ unit: false, integration: false, security: false });
   const [allDone, setAllDone] = useState(false);
-  const [rocketLaunched, setRocketLaunched] = useState(false);
 
   const timeline = useMemo(
     () => ({
       build: 2600,
       testGap: 600,
       package: 1800,
-      deploy: 800,        // ⏩ faster deploy
-      finishPause: 600,   // quick transition
+      deploy: 1600,
+      finishPause: 900,
     }),
     []
   );
@@ -104,30 +108,21 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
     return () => clearTimeout(id);
   }, [stage, timeline.package]);
 
-  // Deploy -> Rocket Launch -> Done
+  // Deploy -> Done
   useEffect(() => {
     if (stage !== 3) return;
-
-    // Launch rocket first
-    const launch = setTimeout(() => setRocketLaunched(true), timeline.deploy);
-
-    // Switch to "Deployment Successful!" after rocket has flown
-    const finish = setTimeout(() => {
+    const id = setTimeout(() => {
       setAllDone(true);
-      onComplete && onComplete();
-    }, timeline.deploy + timeline.finishPause);
-
-    return () => {
-      clearTimeout(launch);
-      clearTimeout(finish);
-    };
+      setTimeout(() => onComplete && onComplete(), timeline.finishPause);
+    }, timeline.deploy);
+    return () => clearTimeout(id);
   }, [stage, onComplete, timeline.deploy, timeline.finishPause]);
 
   const stages = [
-    { name: "Build", icon: <Icons.Code className="w-7 h-7 text-orange-400" />, status: "Compiling source code…" },
-    { name: "Test", icon: <Icons.Test className="w-7 h-7 text-yellow-400" />, status: "Running test suite…" },
+    { name: "Build",   icon: <Icons.Code className="w-7 h-7 text-orange-400" />, status: "Compiling source code…" },
+    { name: "Test",    icon: <Icons.Test className="w-7 h-7 text-yellow-400" />, status: "Running test suite…" },
     { name: "Package", icon: <Icons.Docker className="w-8 h-8 text-blue-400" />, status: "Creating container image…" },
-    { name: "Deploy", icon: null, status: "Deploying with rocket…" },
+    { name: "Deploy",  icon: <Icons.AWS className="w-12 h-12 text-white" />, status: "Deploying to AWS…" },
   ];
 
   return (
@@ -151,31 +146,18 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
                 >
                   {/* Icon circle */}
                   <div className="flex justify-center mb-4">
-                    <div className="h-16 w-16 rounded-full flex items-center justify-center relative overflow-hidden" style={{ backgroundColor: "rgb(30,41,59)" }}>
-                      {isDone ? (
-                        <Icons.Check className="w-8 h-8 text-emerald-500" />
-                      ) : i === 3 ? (
-                        <img
-                          src={rocketGif}
-                          alt="Deploying rocket"
-                          className={`w-16 h-16 transition-transform duration-700 ${
-                            rocketLaunched ? "-translate-y-[500px]" : ""
-                          }`}
-                        />
-                      ) : (
-                        s.icon
-                      )}
-                      {isActive && i !== 3 && (
-                        <span className="absolute inset-0 rounded-full ring-2 ring-emerald-400/30 animate-pulse" />
-                      )}
+                    <div
+                      className="h-16 w-16 rounded-full flex items-center justify-center relative"
+                      style={{ backgroundColor: "rgb(30,41,59)" }}
+                    >
+                      {isDone ? <Icons.Check className="w-8 h-8 text-emerald-500" /> : s.icon}
+                      {isActive && <span className="absolute inset-0 rounded-full ring-2 ring-emerald-400/30 animate-pulse" />}
                     </div>
                   </div>
 
                   {/* Title + status */}
                   <h3 className="text-xl text-center font-medium mb-3">{s.name}</h3>
-                  <p className="text-gray-400 mb-4 text-center text-sm">
-                    {stage >= i ? s.status : "\u00A0"}
-                  </p>
+                  <p className="text-gray-400 mb-4 text-center text-sm">{stage >= i ? s.status : "\u00A0"}</p>
 
                   {/* Stage-specific body */}
                   {i === 0 && (
@@ -183,7 +165,11 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
                       <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full"
-                          style={{ width: `${buildProgress}%`, background: "linear-gradient(90deg, #f97316, #f59e0b)", transition: "width 90ms linear" }}
+                          style={{
+                            width: `${buildProgress}%`,
+                            background: "linear-gradient(90deg, #f97316, #f59e0b)",
+                            transition: "width 90ms linear",
+                          }}
                         />
                       </div>
                       <p className="text-right text-xs text-gray-400 mt-1">{buildProgress}%</p>
@@ -207,7 +193,11 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
 
                   {i === 2 && (
                     <div className="flex justify-center my-4">
-                      <div className={`w-16 h-16 rounded-full border-4 border-blue-500/50 flex items-center justify-center ${isActive ? "animate-[spin_2.4s_linear_infinite]" : ""}`}>
+                      <div
+                        className={`w-16 h-16 rounded-full border-4 border-blue-500/50 flex items-center justify-center ${
+                          isActive ? "animate-[spin_2.4s_linear_infinite]" : ""
+                        }`}
+                      >
                         <Icons.Docker className="w-10 h-10 text-blue-400" />
                       </div>
                     </div>
@@ -215,9 +205,19 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
 
                   {i === 3 && (
                     <div className="flex flex-col items-center">
-                      <p className="text-emerald-400 font-medium mt-3">
-                        {rocketLaunched ? "Deployment complete!" : "Launching deployment…"}
-                      </p>
+                      {isActive && (
+                        <>
+                          <div className="flex items-center space-x-2 mb-2 mt-2">
+                            <Icons.Upload className="w-6 h-6 text-emerald-400" />
+                            <svg width="28" height="6" aria-hidden>
+                              <line x1="0" y1="3" x2="28" y2="3" stroke="#10b981" strokeWidth="2" />
+                            </svg>
+                            <Icons.AWS className="w-12 h-12 text-white" />
+                          </div>
+                          <p className="text-emerald-400 font-medium mt-1">Pushing artifacts…</p>
+                        </>
+                      )}
+                      {isDone && <p className="text-emerald-500 font-medium mt-2">Deployment successful!</p>}
                     </div>
                   )}
                 </div>
@@ -231,7 +231,7 @@ const EnhancedCICDAnimation = ({ onComplete }) => {
             <Icons.Check className="w-10 h-10 text-emerald-400" />
           </div>
           <h2 className="text-3xl font-medium mb-3">Deployment Successful!</h2>
-          <p className="text-gray-400">Your Profile is now live.</p>
+          <p className="text-gray-400">Your resume is now live on AWS.</p>
         </div>
       )}
     </div>
