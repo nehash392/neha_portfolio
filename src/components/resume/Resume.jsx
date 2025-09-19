@@ -11,6 +11,7 @@ import {
   FaBriefcase,
   FaHandshake,
 } from "react-icons/fa";
+import { MdWorkspacePremium } from "react-icons/md"; // ✅ Professional certificate icon
 
 const COLORS = {
   awsOrange: "#FF9900",
@@ -23,7 +24,14 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-const sections = ["about", "skills", "projects", "experience", "contact"];
+const sections = [
+  "about",
+  "skills",
+  "projects",
+  "experience",
+  "certifications",
+  "contact",
+];
 
 export default function AWSDevOpsPortfolio() {
   const [scrolled, setScrolled] = useState(false);
@@ -128,11 +136,13 @@ export default function AWSDevOpsPortfolio() {
           </p>
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mt-2">
             Hi, I’m <span className="text-[#FF9900]">Neha Sharma</span> <br />
-            AWS & DevOps Engineer
+            <span className=" text-4xl md:text-4xl">
+              Technical Project Manager
+            </span>
           </h1>
           <p className="mt-4 text-white/80 max-w-md">
-            I build resilient cloud infrastructures, automate CI/CD pipelines,
-            and design scalable, secure DevOps solutions.
+            Technical Project Manager with AWS and DevOps expertise, driving
+            secure and scalable cloud solutions.
           </p>
 
           <motion.div
@@ -140,9 +150,21 @@ export default function AWSDevOpsPortfolio() {
             animate={{ opacity: 1, y: 0, transition: { delay: 0.6 } }}
             className="mt-6 flex gap-4 text-2xl"
           >
-            <a href="https://github.com" className="hover:text-[#FF9900]"><FaGithub /></a>
-            <a href="https://linkedin.com" className="hover:text-[#FF9900]"><FaLinkedin /></a>
-            <a href="mailto:you@example.com" className="hover:text-[#FF9900]"><FaEnvelope /></a>
+            <a
+              href="https://github.com/nehash392"
+              className="hover:text-[#FF9900]"
+            >
+              <FaGithub />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/nehasharma-cloudmanager"
+              className="hover:text-[#FF9900]"
+            >
+              <FaLinkedin />
+            </a>
+            <a href="mailto:nsharma3992@gmail.com" className="hover:text-[#FF9900]">
+              <FaEnvelope />
+            </a>
           </motion.div>
         </div>
         <motion.div
@@ -178,10 +200,11 @@ export default function AWSDevOpsPortfolio() {
             <FaUserAlt className={ICON_CLASS} /> Who I Am?
           </h2>
           <p className="text-white/80 leading-relaxed">
-            I am an AWS & DevOps Engineer with expertise in designing cloud
-            infrastructures, implementing CI/CD pipelines, and container
-            orchestration. I love solving problems with automation and ensuring
-            high availability.
+            I am a Project Manager with a strong foundation in AWS and DevOps,
+            combining technical expertise with leadership to deliver efficient
+            and scalable solutions. Skilled in cloud architecture, CI/CD
+            pipelines, automation, and container orchestration, I ensure projects
+            are executed with precision, reliability, and high availability.
           </p>
           <a
             href="/resume.pdf"
@@ -203,13 +226,22 @@ export default function AWSDevOpsPortfolio() {
         className="max-w-6xl mx-auto px-6 py-16"
       >
         <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-          <FaTools className={ICON_CLASS} /> Skills & Certifications
+          <FaTools className={ICON_CLASS} /> Skills
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { title: "Cloud", items: ["AWS (EC2, S3, IAM, VPC)", "CloudFormation & Terraform"] },
-            { title: "DevOps Tools", items: ["Kubernetes (EKS)", "Docker & Jenkins", "CI/CD Automation"] },
-            { title: "Certifications", items: ["AWS Solutions Architect", "AWS DevOps Engineer"] },
+            {
+              title: "AWS Cloud",
+              items: ["EC2, S3, IAM ,VPC", "AWS Lambda", "Amplify", "RDS", "CloudFormation"],
+            },
+            {
+              title: "DevOps Tools",
+              items: ["Kubernetes (EKS)", "Docker & Jenkins", "CI/CD Automation", "Git", "Terraform", "Selenium"],
+            },
+            {
+              title: "Monitoring & Logging",
+              items: ["CloudWatch", "CloudTrail", "ELK Stack", "Prometheus", "Grafana", "DataDog"],
+            },
           ].map((col, i) => (
             <motion.div
               key={i}
@@ -218,7 +250,9 @@ export default function AWSDevOpsPortfolio() {
             >
               <h3 className="font-semibold text-lg mb-3">{col.title}</h3>
               <ul className="space-y-2 text-white/80">
-                {col.items.map((it, j) => <li key={j}>• {it}</li>)}
+                {col.items.map((it, j) => (
+                  <li key={j}>• {it}</li>
+                ))}
               </ul>
             </motion.div>
           ))}
@@ -281,14 +315,27 @@ export default function AWSDevOpsPortfolio() {
         <div className="space-y-6">
           {[
             {
-              role: "Senior DevOps Engineer – Acme Cloud",
-              range: "2023 – Present",
-              bullets: ["Built multi-account AWS landing zone", "Migrated 30+ services to EKS & Terraform"],
+              role: "Technical Project Manager - AWS & DevOps Engineer",
+              range: "2024 – Present",
+              bullets: [
+                "Designed and managed AWS infrastructure (EC2, S3, RDS, VPC, IAM, CloudFormation, Auto Scaling).",
+                "Proficient in Terraform (IaC) for automated provisioning and networking.", 
+                "Built high-availability architectures with ALB/NLB and RDS Multi-AZ.",
+                "Automated pipelines with Jenkins, GitHub Actions, AWS CodePipeline.",
+                "Containerized and deployed apps using Docker, ECS, and Kubernetes (EKS).",
+                "Managed Git workflows and release strategies.",
+                "Implemented monitoring/logging with CloudWatch, CloudTrail, ELK.",
+                "Configured IAM roles, policies, and security best practices.",
+                "Automated reporting with Lambda, SES, and EventBridge.",
+                "Deployed multi-tier architectures and CI/CD-driven application releases.",
+              ],
             },
             {
-              role: "Cloud Engineer – CloudStarter",
-              range: "2020 – 2023",
-              bullets: ["Implemented GitHub Actions CI/CD pipelines", "Automated infra with Terraform modules"],
+              role: "Technical Trainer",
+              range: "2019 – 2024",
+              bullets: [
+                
+              ],
             },
           ].map((exp, i) => (
             <motion.div
@@ -299,8 +346,40 @@ export default function AWSDevOpsPortfolio() {
               <h3 className="font-semibold text-lg">{exp.role}</h3>
               <p className="text-sm text-white/70">{exp.range}</p>
               <ul className="mt-3 list-disc list-inside text-white/80">
-                {exp.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                {exp.bullets.map((b, j) => (
+                  <li key={j}>{b}</li>
+                ))}
               </ul>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* CERTIFICATIONS ✅ NEW SECTION */}
+      <motion.section
+        id="certifications"
+        ref={(el) => (sectionRefs.current["certifications"] = el)}
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto px-6 py-16"
+      >
+        <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
+          <MdWorkspacePremium className={ICON_CLASS} /> Certifications
+        </h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {[
+            "PG in Cloud Computing and DevOps - Intellipaat"
+
+          ].map((cert, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -5 }}
+              className="p-6 rounded-xl bg-[#2d3a4a] flex items-center gap-3"
+            >
+              <MdWorkspacePremium className="text-[#FF9900] text-xl" />
+              <span className="text-white/90">{cert}</span>
             </motion.div>
           ))}
         </div>
@@ -317,25 +396,32 @@ export default function AWSDevOpsPortfolio() {
         className="max-w-6xl mx-auto px-6 py-16 text-center"
       >
         <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2">
-          <FaHandshake className={ICON_CLASS} /> Let’s Work Together
+          <FaHandshake className={ICON_CLASS} />  Let's Connect !
         </h2>
         <p className="text-white/80 mb-6">
-          Interested in working together? Get in touch!
+          To know more. Get in touch!
         </p>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1, transition: { delay: 0.2 } }}
           className="flex justify-center gap-6 text-2xl"
         >
-          <a href="https://github.com" className="hover:text-[#FF9900]"><FaGithub /></a>
-          <a href="https://linkedin.com" className="hover:text-[#FF9900]"><FaLinkedin /></a>
-          <a href="mailto:you@example.com" className="hover:text-[#FF9900]"><FaEnvelope /></a>
+          <a href="https://github.com" className="hover:text-[#FF9900]">
+            <FaGithub />
+          </a>
+          <a href="https://linkedin.com" className="hover:text-[#FF9900]">
+            <FaLinkedin />
+          </a>
+          <a href="mailto:you@example.com" className="hover:text-[#FF9900]">
+            <FaEnvelope />
+          </a>
         </motion.div>
       </motion.section>
 
       {/* FOOTER */}
       <footer className="py-6 text-center text-sm text-white/60">
-        © {new Date().getFullYear()} Neha Sharma • Built with React & Tailwind • AWS-themed
+        © {new Date().getFullYear()} Neha Sharma • Built with React & Tailwind •
+        AWS-themed
       </footer>
 
       {/* BACK TO TOP BUTTON */}

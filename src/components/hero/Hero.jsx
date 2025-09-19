@@ -87,7 +87,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Hi, I&apos;m Neha Sharma – <span className="text-awsOrange">AWS &amp; DevOps Engineer</span>
+            Hi, I&apos;m Neha Sharma <br /> 
+            <span className="text-awsOrange text-4xl md:text-5xl">Project Manager – Cloud & DevOps Solutions</span>
           </motion.h1>
 
           <motion.p
@@ -96,7 +97,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            I automate, deploy, and scale cloud-native apps with precision.
+            Transforming complexity into clarity with DevOps and project leadership.
           </motion.p>
 
           <motion.div
@@ -109,15 +110,15 @@ const Hero = () => {
               onClick={handleViewResume}
               className="px-6 py-3 bg-awsOrange hover:bg-orange-600 text-white rounded-md transition-colors duration-300"
             >
-              View Resume
+              View My Portfolio
             </button>
             <a
-              href="https://github.com/nehash392"
+              href="https://www.linkedin.com/in/nehasharma-cloudmanager"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border border-white/20 hover:border-white/40 text-white rounded-md transition-colors duration-300"
             >
-              GitHub Profile
+              LinkedIn Profile
             </a>
           </motion.div>
         </div>
